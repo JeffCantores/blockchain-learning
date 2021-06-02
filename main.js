@@ -9,6 +9,7 @@ class Block{
         this.hash = this.calculateHash();
     }
 
+    // implemented using SHA256 hashing algorithm
     calculateHash(){
         return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)).toString();
     }
@@ -16,7 +17,7 @@ class Block{
 
 class Blockchain{
     constructor(){
-        this.chain = [this.createGenesisBlock()];
+        this.chain = [this.createGenesisBlock()]; 
     }
 
     createGenesisBlock(){
@@ -52,15 +53,17 @@ class Blockchain{
 }
 
 let patientRecord = new Blockchain();
-patientRecord.addBlock(new Block(1, new Date(), {name: "Jeff", Operation: "Tuli"}));
-patientRecord.addBlock(new Block(2, new Date(), {name: "Jeff", Operation: "Langgas"}));
+patientRecord.addBlock(new Block(1, new Date(), {name: "Jeff", Operation: "Tuli"})); // sample input (tuli = circumsicion)
+patientRecord.addBlock(new Block(2, new Date(), {name: "Jeff", Operation: "Langgas"})); // sample input (langgas = washing of the newly circumsices penis)
 
 console.log("Is blockchain valid? " + patientRecord.isChainValid());
 
 patientRecord.chain[1].data.name = "Jep";
 patientRecord.chain[1].hash = patientRecord.chain[1].calculateHash(); 
+/* Even though we have made a new hash for the tampered block the chain will still be invalid because the following 
+ blocks are referenced from this block. */
 
-console.log("Is blockchain valid? " + patientRecord.isChainValid());
+console.log("Is blockchain valid? " + patientRecord.isChainValid()); 
 
 
 // console.log(JSON.stringify(patientRecord, null, 4));
