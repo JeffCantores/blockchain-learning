@@ -52,18 +52,24 @@ class Blockchain{
     }
 }
 
-let patientRecord = new Blockchain();
-patientRecord.addBlock(new Block(1, new Date(), {name: "Jeff", Operation: "Tuli"})); // sample input (tuli = circumsicion)
-patientRecord.addBlock(new Block(2, new Date(), {name: "Jeff", Operation: "Langgas"})); // sample input (langgas = washing of the newly circumsices penis)
+let patientRecord = new Blockchain(); 
+/*THIS IS ONLY EXECUTED ONCE AN ACCOUNT IS CREATED.
+    * Add if statement (or something more efficient)*/
+   
+
+patientRecord.addBlock(new Block(1, new Date(), {name: "Jeff", Operation: "Tuli"})); 
+patientRecord.addBlock(new Block(2, new Date(), {name: "Jeff", Operation: "Langgas"})); 
 
 console.log("Is blockchain valid? " + patientRecord.isChainValid());
 
+
+//Tampering data 
 patientRecord.chain[1].data.name = "Jep";
 patientRecord.chain[1].hash = patientRecord.chain[1].calculateHash(); 
 /* Even though we have made a new hash for the tampered block the chain will still be invalid because the following 
  blocks are referenced from this block. */
 
-console.log("Is blockchain valid? " + patientRecord.isChainValid()); 
+console.log("Is blockchain valid? " + patientRecord.isChainValid()); // the blockchain now is invalid
 
 
-// console.log(JSON.stringify(patientRecord, null, 4));
+console.log(JSON.stringify(patientRecord, null, 4)); // Display of patient records
